@@ -31,7 +31,8 @@ SECRET_KEY = 'django-insecure-w$6r-+@n&=lnn9$g&qc+8y^r%*x)8r=t9uaj4!7zv@xgo_m4^3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = "true"
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "https://tu-futuro-backend-production.up.railway.app").split(",") if os.getenv("ALLOWED_HOSTS") else []
+
+ALLOWED_HOSTS = os.getenv("https://tu-futuro-backend-production.up.railway.app", "tu-futuro-backend-production.up.railway.app").split(",") if os.getenv("ALLOWED_HOSTS") else []
 
 # Confía en tu dominio de Railway para CSRF (ajusta el dominio)
 #CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if os.getenv("CSRF_TRUSTED_ORIGINS") else []
