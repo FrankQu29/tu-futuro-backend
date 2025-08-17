@@ -1,5 +1,3 @@
-# cardic-system-campras-inter
-
 Una API en Django (DRF) para explorar carreras, subáreas, mapas curriculares, escuelas y voluntariados, con soporte opcional de MongoDB (MongoEngine) y utilidades para recolectar datos desde fuentes públicas (Wikipedia, Wikidata y Google Places).
 
 - Estado: en desarrollo
