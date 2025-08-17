@@ -1,4 +1,10 @@
-from mongoengine import Document, StringField, ListField
+from mongoengine import Document, StringField, ListField, EmbeddedDocumentField, EmbeddedDocument
+
+
+class Leccion(EmbeddedDocument):
+    titulo = StringField(required=True)
+    videos = ListField(StringField(required=True))
+    descripcion = StringField(required=True)
 
 class Subarea(Document):
     """Modelo de Subárea.
@@ -16,6 +22,7 @@ class Subarea(Document):
     introduccion = StringField(required=True)
     descripcion = StringField(required=True)
     videos_escuela = ListField(required=True)
+    lecciones = ListField(EmbeddedDocumentField("Leccion"), required=True)
     carrera = StringField(required=True)
 
     meta = {

@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from api.models.mapa_curricular import MapaCurricular
-from api.models.subarea import Subarea
+from api.models.subarea import Subarea, Leccion
 from api.models.formulario import Formulario
 
 class BulkCreateSubareasAPIView(APIView):
@@ -19,7 +19,26 @@ class BulkCreateSubareasAPIView(APIView):
         created_ids, errors = [], []
         for i, data in enumerate(items):
             try:
-                obj = Subarea(**data)
+                payload = dict(data)
+
+                # Normalización: lecciones puede venir como lista de dicts
+                if "lecciones" in payload and isinstance(payload["lecciones"], list):
+                    payload["lecciones"] = [
+                        Leccion(**l) if not isinstance(l, Leccion) else l
+                        for l in payload["lecciones"]
+                    ]
+
+                # Asegurar que videos_escuela sea lista
+                if "videos_escuela" in payload and not isinstance(payload["videos_escuela"], list):
+                    raise ValueError("El campo 'videos_escuela' debe ser una lista.")
+
+                # Validar campos mínimos esperados
+                for field in ("nombre", "introduccion", "descripcion", "carrera", "lecciones", "videos_escuela"):
+                    if field not in payload:
+                        raise ValueError(f"Falta el campo requerido '{field}'.")
+
+                obj = Subarea(**payload)
+                obj.validate()  # validación explícita para mejores mensajes
                 obj.save()
                 created_ids.append(str(obj.id))
             except Exception as e:
@@ -30,7 +49,6 @@ class BulkCreateSubareasAPIView(APIView):
         if created_ids and errors:
             return Response({"created": len(created_ids), "ids": created_ids, "failed": len(errors), "errors": errors}, status=status.HTTP_207_MULTI_STATUS)
         return Response({"failed": len(errors), "errors": errors}, status=status.HTTP_400_BAD_REQUEST)
-
 
 class SubareaDetallePorNombreAPIView(APIView):
     """
@@ -52,12 +70,18 @@ class SubareaDetallePorNombreAPIView(APIView):
             "nombre": subarea.nombre,
             "introduccion": subarea.introduccion,
             "descripcion": subarea.descripcion,
-            "videos_escuela": subarea.videos_escuela,
+            "videos_escuela": list(subarea.videos_escuela or []),
             "carrera": subarea.carrera,
+            "lecciones": [
+                {
+                    "titulo": lec.titulo,
+                    "videos": list(lec.videos or []),
+                    "descripcion": lec.descripcion,
+                }
+                for lec in (subarea.lecciones or [])
+            ],
         }
         return Response(data, status=status.HTTP_200_OK)
-
-
 
 class MapaCurricularNombresPorCarreraAPIView(APIView):
     """
@@ -76,7 +100,6 @@ class MapaCurricularNombresPorCarreraAPIView(APIView):
         nombres = [m.nombre for m in materias]
         return Response(nombres, status=status.HTTP_200_OK)
 
-
 class DescripcionMateriaMapaCurricularAPIView(APIView):
     """
     GET /api/carreras/mapa-curricular/descripcion?materia=<nombre_materia>
@@ -93,7 +116,6 @@ class DescripcionMateriaMapaCurricularAPIView(APIView):
             return Response({"detail": "Materia no encontrada."}, status=status.HTTP_404_NOT_FOUND)
 
         return Response({"descripcion": doc.descripcion}, status=status.HTTP_200_OK)
-
 
 class FormularioPorSubareaAPIView(APIView):
     """
@@ -120,4 +142,36 @@ class FormularioPorSubareaAPIView(APIView):
             "subarea": formulario.subarea,
         }
         return Response(data, status=status.HTTP_200_OK)
-# ... existing code ...
+
+class SubareasPorCarreraAPIView(APIView):
+    """
+    GET /api/subareas?carrera=<nombre_carrera>
+    Lista las subáreas pertenecientes a una carrera (case-insensitive).
+    """
+    def get(self, request):
+        carrera = request.query_params.get("carrera")
+        if not carrera:
+            return Response({"detail": "Falta el parámetro 'carrera'."}, status=status.HTTP_400_BAD_REQUEST)
+
+        qs = Subarea.objects(carrera__iexact=carrera.strip()).only(
+            "nombre", "introduccion", "descripcion", "videos_escuela", "carrera", "lecciones"
+        )
+        result = []
+        for s in qs:
+            result.append({
+                "id": str(s.id),
+                "nombre": s.nombre,
+                "introduccion": s.introduccion,
+                "descripcion": s.descripcion,
+                "videos_escuela": list(s.videos_escuela or []),
+                "carrera": s.carrera,
+                "lecciones": [
+                    {
+                        "titulo": lec.titulo,
+                        "videos": list(lec.videos or []),
+                        "descripcion": lec.descripcion,
+                    }
+                    for lec in (s.lecciones or [])
+                ],
+            })
+        return Response(result, status=status.HTTP_200_OK)
