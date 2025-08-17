@@ -61,7 +61,7 @@ class SubareaDetallePorNombreAPIView(APIView):
 
 class MapaCurricularNombresPorCarreraAPIView(APIView):
     """
-    GET /api/carreras/mapa-curricular?narrera=<nombre_carrera>
+    GET /api/carreras/mapa-curricular?carrera=<nombre_carrera>
     Retorna una lista con los nombres del mapa curricular de la carrera indicada.
     Si 'mapa_curricular' es una lista de strings, se devuelve tal cual.
     Si es una lista de objetos, se extrae la clave 'nombre' de cada elemento.

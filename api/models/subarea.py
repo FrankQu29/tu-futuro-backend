@@ -1,6 +1,17 @@
 from mongoengine import Document, StringField, ListField
 
 class Subarea(Document):
+    """Modelo de Subárea.
+
+    Subdivisión de una carrera con contenidos y recursos asociados.
+
+    Campos:
+    - nombre (str, requerido): Nombre de la subárea.
+    - introduccion (str, requerido): Texto introductorio.
+    - descripcion (str, requerido): Descripción detallada.
+    - videos_escuela (list, requerido): Recursos audiovisuales de apoyo.
+    - carrera (str, requerido): Nombre de la carrera a la que pertenece.
+    """
     nombre = StringField(required=True)
     introduccion = StringField(required=True)
     descripcion = StringField(required=True)
@@ -13,6 +24,6 @@ class Subarea(Document):
         # Índices recomendados:
         "indexes": [
             "nombre",  # Búsqueda por nombre
-            "carrera",  # Filtrado por ubicación
+            "carrera",  # Filtrado por carrera
         ],
     }

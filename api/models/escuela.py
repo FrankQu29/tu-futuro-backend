@@ -3,10 +3,27 @@ from mongoengine import Document, StringField, FloatField, ListField, EmbeddedDo
 
 
 class Coordenadas(EmbeddedDocument):
+    """Documento embebido para coordenadas geográficas.
+
+    Campos:
+    - lat (float, requerido)
+    - lng (float, requerido)
+    """
     lat = FloatField(required=True)
     lng = FloatField(required=True)
 
 class Escuela(Document):
+    """Modelo de Escuela/Universidad.
+
+    Campos:
+    - nombre (str, requerido): Nombre de la institución.
+    - ubicacion (list[Coordenadas], requerido): Uno o varios puntos geográficos.
+    - type (str, requerido, choices=[publica, privada]): Naturaleza de la institución.
+    - carreras (list[str], requerido): Carreras ofrecidas (por nombre).
+    - costo (float, requerido): Costo o colegiatura referencial.
+
+    Índices: nombre, ubicacion y arreglo carreras.
+    """
     nombre = StringField(required=True)
     ubicacion = ListField(EmbeddedDocumentField(Coordenadas), required=True)
     type = StringField(choices=["publica", "privada"], required=True)

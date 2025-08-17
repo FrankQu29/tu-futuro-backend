@@ -1,6 +1,15 @@
 from mongoengine import StringField, Document
 
 class MapaCurricular(Document):
+    """Modelo de Mapa Curricular.
+
+    Representa una materia o nodo dentro del mapa curricular de una carrera.
+
+    Campos:
+    - nombre (str, requerido): Nombre de la materia.
+    - descripcion (str, requerido): Descripción de la materia.
+    - carrera (str, requerido): Nombre de la carrera a la que pertenece.
+    """
     nombre = StringField(required=True)
     descripcion = StringField(required=True)
     carrera = StringField(required=True)
@@ -11,6 +20,6 @@ class MapaCurricular(Document):
         # Índices recomendados:
         "indexes": [
             "nombre",  # Búsqueda por nombre
-            "carrera",  # Filtrado por ubicación
+            "carrera",  # Filtrado por carrera
         ],
     }
