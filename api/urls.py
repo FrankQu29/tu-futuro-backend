@@ -36,7 +36,6 @@ from api.views.stats import DashboardPromedioResultadosPorCarreraAPIView
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     # Auth (OAuth2)
     path('auth/oauth2/start', OAuth2StartAPIView.as_view(), name='oauth2-start'),
     path('auth/oauth2/callback', OAuth2CallbackAPIView.as_view(), name='oauth2-callback'),
