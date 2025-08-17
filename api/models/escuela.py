@@ -9,8 +9,8 @@ class Coordenadas(EmbeddedDocument):
     - lat (float, requerido)
     - lng (float, requerido)
     """
-    lat = FloatField(required=True)
-    lng = FloatField(required=True)
+    lat = FloatField()
+    lng = FloatField()
 
 class Escuela(Document):
     """Modelo de Escuela/Universidad.
@@ -24,11 +24,11 @@ class Escuela(Document):
 
     Índices: nombre, ubicacion y arreglo carreras.
     """
-    nombre = StringField(required=True)
-    ubicacion = ListField(EmbeddedDocumentField(Coordenadas), required=True)
-    type = StringField(choices=["publica", "privada"], required=True)
-    carreras = ListField(required=True)
-    costo = FloatField(required=True)
+    nombre = StringField()
+    ubicacion = ListField(EmbeddedDocumentField(Coordenadas))
+    type = StringField(choices=["publica", "privada"])
+    carreras = ListField()
+    costo = FloatField()
 
     meta = {
         "collection": "escuelas",

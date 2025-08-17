@@ -14,9 +14,9 @@ class Voluntariado(Document):
     - salario (float, req.): Estimación de apoyo/estímulo (si aplica).
     - permalink (str, req.): Enlace permanente a la publicación.
     """
-    carrera = StringField(required=True)
-    titulo = StringField(required=True)
-    descripcion = StringField(required=True)
-    ubicacion = StringField(required=True)
-    salario = FloatField(required=True)
-    permalink = StringField(required=True)
+    carrera = StringField()
+    titulo = StringField()
+    descripcion = StringField()
+    ubicacion = StringField()
+    salario = FloatField()
+    permalink = StringField()

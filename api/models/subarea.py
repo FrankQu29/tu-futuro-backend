@@ -1,10 +1,10 @@
-from mongoengine import Document, StringField, ListField, EmbeddedDocumentField, EmbeddedDocument
+from mongoengine import Document, StringField, ListField, EmbeddedDocumentField, EmbeddedDocument, FloatField, IntField
 
 
 class Leccion(EmbeddedDocument):
-    titulo = StringField(required=True)
-    videos = ListField(StringField(required=True))
-    descripcion = StringField(required=True)
+    titulo = StringField()
+    videos = ListField(StringField())
+    descripcion = StringField()
 
 class Subarea(Document):
     """Modelo de Subárea.
@@ -18,12 +18,14 @@ class Subarea(Document):
     - videos_escuela (list, requerido): Recursos audiovisuales de apoyo.
     - carrera (str, requerido): Nombre de la carrera a la que pertenece.
     """
-    nombre = StringField(required=True)
-    introduccion = StringField(required=True)
-    descripcion = StringField(required=True)
-    videos_escuela = ListField(required=True)
-    lecciones = ListField(EmbeddedDocumentField("Leccion"), required=True)
-    carrera = StringField(required=True)
+    nombre = StringField()
+    introduccion = StringField()
+    descripcion = StringField()
+    videos_escuela = ListField()
+    lecciones = ListField(EmbeddedDocumentField("Leccion"))
+    carrera = StringField()
+    progreso = IntField(default=0)
+    total_lecciones = IntField(default=0)
 
     meta = {
         "collection": "subareas",

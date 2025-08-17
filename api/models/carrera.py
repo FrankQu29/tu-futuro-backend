@@ -18,11 +18,11 @@ class Carrera(Document):
     - main_area: para filtros por área.
     - sub_areas: para búsquedas por pertenencia.
     """
-    nombre = StringField(required=True)
-    descripcion = StringField(required=True)
+    nombre = StringField()
+    descripcion = StringField()
     main_area = StringField(choices=MAIN_AREAS)
-    videos = ListField(required=True)
-    sub_areas = ListField(required=True)
+    videos = ListField()
+    sub_areas = ListField()
 
     meta = {
         "collection": "carreras",

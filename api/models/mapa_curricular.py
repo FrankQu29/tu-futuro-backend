@@ -10,9 +10,9 @@ class MapaCurricular(Document):
     - descripcion (str, requerido): Descripción de la materia.
     - carrera (str, requerido): Nombre de la carrera a la que pertenece.
     """
-    nombre = StringField(required=True)
-    descripcion = StringField(required=True)
-    carrera = StringField(required=True)
+    nombre = StringField()
+    descripcion = StringField()
+    carrera = StringField()
 
     meta = {
         "collection": "mapa_curricular",

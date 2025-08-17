@@ -1,4 +1,4 @@
-from mongoengine import Document, StringField, BooleanField
+from mongoengine import Document, StringField, BooleanField, ListField
 
 from api.models.constants import MAIN_AREAS
 
@@ -16,15 +16,15 @@ class User(Document):
     - main_area (str, choices=MAIN_AREAS): Área principal asociada.
     - zona (bool, req.): Bandera genérica (p.ej., zona geográfica preferente).
     """
-    first_name = StringField(required=True)
-    last_name = StringField(required=True)
-    email = StringField(required=True)
-    ubicacion = StringField(required=True)
-    discapacidad = StringField(required=True)
-    carrera = StringField(required=True)
+    first_name = StringField()
+    last_name = StringField()
+    email = StringField()
+    ubicacion = StringField()
+    discapacidad = StringField()
+    carrera = StringField()
     main_area = StringField(choices=MAIN_AREAS)
-    #intereses = ListField(required=True)
-    zona = BooleanField(required=True)
+    intereses = ListField()
+    zona = BooleanField()
 
     meta = {
         "collection": "user",
