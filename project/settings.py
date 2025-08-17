@@ -135,7 +135,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-MONGO_URI = os.getenv("MONGO_URI")
+#MONGO_URI = os.getenv("MONGO_URI")
+MONGO_URI = "mongodb+srv://tepoxfrancisco1:wZiDK36xnZmb1bez@cluster0.loydod.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 if MONGO_URI:
     try:
