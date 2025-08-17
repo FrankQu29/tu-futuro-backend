@@ -144,5 +144,5 @@ if MONGO_URI:
         mongoengine.connect(host=MONGO_URI, serverSelectionTimeoutMS=5000, uuidRepresentation="standard")
     except Exception as e:
         logging.warning("No se pudo conectar a MongoDB Atlas al iniciar: %s", e)
-    else:
-        logging.warning("MONGO_URI no está configurada en variables de entorno.")
+else:
+    logging.warning("MONGO_URI no está configurada en variables de entorno.")
