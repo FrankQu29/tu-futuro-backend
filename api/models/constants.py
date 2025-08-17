@@ -10,6 +10,6 @@ MAIN_AREAS: tupla de áreas válidas para el campo 'main_area' en varios modelos
 MAIN_AREAS = (
     "sociales",
     "ciencias",
-    "",
+    "salud",
     "humanidades",
 )
