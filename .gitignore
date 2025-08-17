@@ -1,0 +1,11 @@
+.idea/
+salidas/
+
+.env
+
+.venv/
+
+venv/
+
+docker-compose.yml
+Dockerfile
