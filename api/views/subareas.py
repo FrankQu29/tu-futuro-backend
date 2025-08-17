@@ -4,7 +4,6 @@ from rest_framework import status
 
 from api.models.mapa_curricular import MapaCurricular
 from api.models.subarea import Subarea
-from api.models.carrera import Carrera
 from api.models.formulario import Formulario
 
 class BulkCreateSubareasAPIView(APIView):

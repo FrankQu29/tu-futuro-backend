@@ -1,4 +1,3 @@
-from django.shortcuts import render
 # ... existing code ...
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -9,7 +8,6 @@ from urllib.parse import urlencode
 import base64
 import os
 import hashlib
-import json
 
 from api.models.user import User
 
