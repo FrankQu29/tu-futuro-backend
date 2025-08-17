@@ -7,18 +7,52 @@ Resumen de endpoints principales:
 - Registro (POST):
   - /api/usuarios/registro: registro de usuario (tradicional u OAuth2 asistido).
 - Consultas (GET):
-  - /api/voluntariados?carrera=...: voluntariados por carrera.
-  - /api/carreras?area=...: nombres de carreras por área (o todas si no se envía área).
-  - /api/carreras/mapa-curricular?carrera=...: nombres de materias del mapa curricular.
-  - /api/carreras/mapa-curricular/descripcion?materia=...: descripción de una materia.
-  - /api/escuelas?carrera=...: escuelas que ofrecen la carrera.
-  - /api/subareas?carrera=...: subáreas por carrera.
-  - /api/subarea?nombre=...: detalle de una subárea.
-  - /api/formulario?subarea=...: formulario por subárea.
-  - /api/dashboard/formularios/promedio-por-carrera: promedio de resultados por carrera.
+  - /voluntariados?carrera=...: voluntariados por carrera.
+  - /carreras?area=...: nombres de carreras por área (o todas si no se envía área).
+  - /carreras/mapa-curricular?carrera=...: nombres de materias del mapa curricular.
+  - /carreras/mapa-curricular/descripcion?materia=...: descripción de una materia.
+  - /escuelas?carrera=...: escuelas que ofrecen la carrera.
+  - /subareas?carrera=...: subáreas por carrera.
+  - /subarea?nombre=...: detalle de una subárea.
+  - /formulario?subarea=...: formulario por subárea.
+  - /dashboard/formularios/promedio-por-carrera: promedio de resultados por carrera.
 - Carga masiva (POST):
   - /api/bulk/carreras, /api/bulk/subareas, /api/bulk/escuelas,
     /api/bulk/voluntariados, /api/bulk/formularios, /api/bulk/mapas
+
+Parámetros de consulta esperados (solo documentación):
+- GET /api/auth/oauth2/start
+  - provider (str, requerido): proveedor OAuth2, ej. "google".
+- GET /api/auth/oauth2/callback
+  - code (str, requerido): código de autorización del proveedor.
+  - state (str, requerido): valor antifraude recibido en el callback.
+- GET /api/voluntariados
+  - carrera (str, requerido): nombre de la carrera para filtrar.
+- GET /api/carreras
+  - area (str, opcional): una de: sociales, ciencias, salud, humanidades.
+- GET /api/carreras/mapa-curricular
+  - carrera (str, requerido): nombre de la carrera.
+- GET /api/carreras/mapa-curricular/descripcion
+  - materia (str, requerido): nombre de la materia.
+- GET /api/escuelas
+  - carrera (str, requerido): nombre de la carrera.
+- GET /api/subareas
+  - carrera (str, requerido): nombre de la carrera.
+- GET /api/subarea
+  - nombre (str, requerido): nombre exacto de la subárea.
+- GET /api/formulario
+  - subarea (str, requerido): nombre de la subárea.
+- GET /api/dashboard/formularios/promedio-por-carrera
+  - (sin parámetros de consulta)
+
+Cuerpos esperados (POST, solo documentación):
+- POST /api/usuarios/registro: JSON con campos del usuario (ver vista register.RegistroUsuarioView).
+- POST /api/bulk/carreras: arreglo JSON de objetos Carrera.
+- POST /api/bulk/subareas: arreglo JSON de objetos Subarea.
+- POST /api/bulk/escuelas: arreglo JSON de objetos Escuela (incluye ubicacion [{lat,lng}]).
+- POST /api/bulk/voluntariados: arreglo JSON de objetos Voluntariado.
+- POST /api/bulk/formularios: arreglo JSON de objetos Formulario.
+- POST /api/bulk/mapas: arreglo JSON de objetos MapaCurricular.
 
 Notas:
 - Todos los endpoints retornan JSON.

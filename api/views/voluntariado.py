@@ -32,8 +32,11 @@ class BulkCreateVoluntariadosAPIView(APIView):
 
 class VoluntariadosPorCarreraAPIView(APIView):
     """
-    GET /ruta?carrera=NombreCarrera
-    Devuelve un listado JSON de voluntariados filtrados por 'carrera'.
+    GET /api/voluntariados?carrera=<nombre_carrera>
+    Parámetros de consulta:
+    - carrera (str, requerido): nombre de la carrera para filtrar (case-insensitive).
+
+    Respuesta: lista de voluntariados [{carrera, titulo, descripcion, ubicacion, salario, permalink}].
     """
     def get(self, request):
         carrera = request.query_params.get("carrera")
